@@ -1,0 +1,52 @@
+
+/*Google Fonts*/
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+
+$base-color: #1D4EFF;
+$second-color: #FFDA17;
+
+$theme-colors: (
+    "info": tomato,
+    "danger": teal,
+    "primary": $base-color,
+    "navbar-dark-toggler-icon-bg": white,
+    "form-check-input-bg" : #FFDA17
+);
+
+* {
+    font-family: 'Play', sans-serif;
+}
+
+th{
+    font-weight: normal;
+}
+
+h5{
+    text-align: center;
+}
+
+.form-check-input {
+    border-color: $base-color !important;
+}
+
+.form-switch .form-check-input {
+    height: 1.5em !important;
+    width: 3em!important;
+    margin: 0;
+    margin-right: 10px;
+}
+
+.form-switch .form-check-input:checked  {
+    background-color: $base-color !important;
+}
+
+.form-switch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* import bootstrap to set changes */
+@import "~bootstrap/scss/bootstrap";
+
