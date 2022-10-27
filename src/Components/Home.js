@@ -6,6 +6,7 @@ export default function Home() {
     <div>
       <Header />
       <h1>Home</h1>
+      <h2>{process.env.REACT_APP_API_URL}</h2>
     </div>
   )
 }
