@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const http = axios.create({
-    baseURL: 'http://captgym.local/api'
+    baseURL: process.env.REACT_APP_API_URL
 });
 
 http.defaults.headers.post['Content-Type'] = 'application/json';
