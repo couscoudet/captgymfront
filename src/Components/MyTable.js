@@ -1,7 +1,5 @@
 import Table from 'react-bootstrap/Table';
-import { useState } from 'react';
-import { useRef } from 'react';
-import { useEffect } from 'react';
+
 
 function MyTable({parentData}) {
 console.log({parentData})
