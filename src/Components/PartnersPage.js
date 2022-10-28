@@ -24,7 +24,7 @@ export default function PartnersPage() {
         <div>{data ? data[0].name : 'chargement'}</div>
         <Header />
         <AddPartnerModal />
-        <MyTable />
+        <MyTable parentData={data ? data : ''} />
     </div>
   )
 };

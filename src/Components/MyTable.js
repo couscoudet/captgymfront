@@ -1,6 +1,10 @@
 import Table from 'react-bootstrap/Table';
+import { useState } from 'react';
+import { useRef } from 'react';
+import { useEffect } from 'react';
 
-function MyTable() {
+function MyTable({parentData}) {
+console.log({parentData})
   return (
     <Table striped bordered hover>
       <thead>
@@ -11,11 +15,14 @@ function MyTable() {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
+      {parentData ? parentData.map(partner => (
+        <tr key={partner.id}>
+          <td>{partner.id}</td>
+          <td>{partner.name}</td>
+          <td>{partner.active ? 'oui' : 'non'}</td>
         </tr>
+      )) : ''}
+        
         <tr>
           <td>2</td>
           <td>Jacob</td>
