@@ -14,6 +14,6 @@ http.interceptors.request.use(config => {
     }
     return config
 },
-error => Promise.reject(error));
+error => Promise.reject(error.response.data));
 
 export default http;

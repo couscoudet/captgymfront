@@ -103,6 +103,7 @@ export default function AddPartnerModal() {
             id="partner.active"
             label="Partenaire actif"
             defaultChecked={true}
+            controlId="partner.active"
             />
             <h5 className='m-3 text-primary'>Modules activés par défaut pour les salles de ce partenaire</h5>
             {
@@ -110,6 +111,7 @@ export default function AddPartnerModal() {
                     <Form.Check 
                     type="checkbox"
                     id={`partner.${clientModule}`}
+                    key={clientModule}
                     label={clientModule}
                     />
                 ))

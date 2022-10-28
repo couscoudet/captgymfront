@@ -13,7 +13,7 @@ const Login = ({ loginUser }) => {
         Password:
       </label>
       <input type="password" value={password} onChange={(event) => setPassword(event.currentTarget.value)} />
-      <button onClick={() => loginUser(email, password)}>Connexion</button>
+      <button onClick={(event) => loginUser(email, password)}>Connexion</button>
     </div>
   )
 }
