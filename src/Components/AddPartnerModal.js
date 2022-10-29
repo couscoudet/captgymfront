@@ -4,10 +4,23 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import MyButton from './MyButton';
 import { CLIENT_MODULES } from '../helpers/CLIENT_MODULES';
+import http from '../helpers/http';
 
-export default function AddPartnerModal() {
+export default function AddPartnerModal({ submitPartner }) {
   const [show, setShow] = useState(false);
   // const [message, setMessage] = useState('');
+
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
+  const [postalCode, setPostalCode] = useState('');
+  const [city, setCity] = useState('');
+  const [country, setCountry] = useState('');
+  const [phone, setPhone] = useState('');
+  const [description, setDescription] = useState('');
+  const [logo, setLogo] = useState('');
+  const [website, setWebsite] = useState('');
+  const [active, setActive] = useState(true);
+  const [modulePerms, setModulePerms] = useState({recrutement: false, boissons: false, planning: false, newsletter: false});
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -18,8 +31,14 @@ export default function AddPartnerModal() {
     
   // }
 
+  const handleSubmit = () => {
+    submitPartner(name, address, postalCode, city, country, phone, description, logo, website, active);
+    handleClose();
+  };
+
+
   return (
-    <>
+    <div onSubmit={submitPartner}>
       <MyButton onClick={handleShow}>Ajouter un partenaire</MyButton>
 
       <Modal show={show} onHide={handleClose}>
@@ -35,6 +54,7 @@ export default function AddPartnerModal() {
                 placeholder="XYZ COMPANY"
                 autoFocus
                 required
+                onChange={(event) => setName(event.currentTarget.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="partner.address">
@@ -43,6 +63,7 @@ export default function AddPartnerModal() {
                 type="text"
                 placeholder="numero, voie, étage..."
                 required
+                onChange={(event) => setAddress(event.currentTarget.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="partner.postalCode">
@@ -51,6 +72,7 @@ export default function AddPartnerModal() {
                 type="text"
                 placeholder="00000"
                 required
+                onChange={(event) => setPostalCode(event.currentTarget.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="partner.city">
@@ -59,6 +81,7 @@ export default function AddPartnerModal() {
                 type="text"
                 placeholder="ville"
                 required
+                onChange={(event) => setCity(event.currentTarget.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="partner.country">
@@ -67,6 +90,7 @@ export default function AddPartnerModal() {
                 type="text"
                 default="France"
                 required
+                onChange={(event) => setCountry(event.currentTarget.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="partner.phone">
@@ -75,6 +99,7 @@ export default function AddPartnerModal() {
                 type="tel"
                 placeholder="+33XXXXXXXXX"
                 required
+                onChange={(event) => setPhone(event.currentTarget.value)}
               />
             </Form.Group>
             <Form.Group
@@ -82,13 +107,14 @@ export default function AddPartnerModal() {
               controlId="partner.description"
             >
               <Form.Label>Descriptif et commentaires</Form.Label>
-              <Form.Control as="textarea" rows={3} />
+              <Form.Control as="textarea" rows={3} onChange={(event) => setDescription(event.currentTarget.value)}/>
             </Form.Group>
             <Form.Group className="mb-3" controlId="partner.logo">
               <Form.Label>Téléverser le logo du partenaire</Form.Label>
               <Form.Control
                 type="file"
                 placeholder="+33XXXXXXXXX"
+                // onChange={(event) => setLogo('')}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="partner.website">
@@ -96,6 +122,7 @@ export default function AddPartnerModal() {
               <Form.Control
                 type="text"
                 default="France"
+                onChange={(event) => setWebsite(event.currentTarget.value)}
               />
             </Form.Group>
             <Form.Check 
@@ -104,6 +131,7 @@ export default function AddPartnerModal() {
             label="Partenaire actif"
             defaultChecked={true}
             controlId="partner.active"
+            onChange={(event) => setActive(event.currentTarget.checked)}
             />
             <h5 className='m-3 text-primary'>Modules activés par défaut pour les salles de ce partenaire</h5>
             {
@@ -111,8 +139,10 @@ export default function AddPartnerModal() {
                     <Form.Check 
                     type="checkbox"
                     id={`partner.${clientModule}`}
+                    value={clientModule}
                     key={clientModule}
                     label={clientModule}
+                    onChange={(event) => setModulePerms(modulePerms.event.currentTarget.value = event.currentTarget.checked)}
                     />
                 ))
             }
@@ -122,11 +152,11 @@ export default function AddPartnerModal() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleSubmit}>
             Save Changes
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
+    </div>
   );
 }

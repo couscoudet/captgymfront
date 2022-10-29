@@ -7,6 +7,41 @@ import MyTable from './MyTable'
 import AddPartnerModal from './AddPartnerModal';
 
 export default function PartnersPage() {
+    const submitPartner = (name, address, postalCode, city, country, phone, description, logo, website, active) => {
+      let partnerData = {
+        name: name,
+        address: address,
+        postalCode: postalCode, 
+        city: city,
+        country: country,
+        phone: phone, 
+        description: description,
+        logo: logo,
+        website: website,
+        active: active
+      };
+      console.log(JSON.stringify(partnerData));
+      http.post('/partners',JSON.stringify(partnerData));
+      // http.post('/partners', {
+      //   name: name,
+      //   address: address,
+      //   postalCode: postalCode, 
+      //   city: city,
+      //   country: country,
+      //   phone: phone, 
+      //   description: description,
+      //   logo: logo,
+      //   website: website,
+      //   active: active
+      // })
+      // .then(function (response) {
+      //   console.log(response);
+      // })
+      // .catch(function (error) {
+      //   console.log(error);
+      // });
+      };
+
     const [data, setData] = useState('');
     useEffect(() => {
 
@@ -23,7 +58,7 @@ export default function PartnersPage() {
     <div>
         <div>{data ? data[0].name : 'chargement'}</div>
         <Header />
-        <AddPartnerModal />
+        <AddPartnerModal submitPartner={(name, address, postalCode, city, country, phone, description, logo, website, active) => submitPartner(name, address, postalCode, city, country, phone, description, logo, website, active)}/>
         <MyTable parentData={data ? data : ''} />
     </div>
   )
