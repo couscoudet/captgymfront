@@ -5,11 +5,17 @@ import Form from 'react-bootstrap/Form';
 import MyButton from './MyButton';
 import { CLIENT_MODULES } from '../helpers/CLIENT_MODULES';
 import http from '../helpers/http';
+import { forwardRef, useImperativeHandle, useRef } from 'react';
+import DeleteAlertModal from './DeleteAlertModal';
 
-export default function AddPartnerModal({ submitPartner }) {
+const ModifyPartnerModal = forwardRef(({ partner, submitPartner }, ref) => {
+  useImperativeHandle(ref, () => ({
+    handleShow() {setShow(true)} 
+    }));
+  
   const [show, setShow] = useState(false);
   // const [message, setMessage] = useState('');
-
+  
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [postalCode, setPostalCode] = useState('');
@@ -22,8 +28,10 @@ export default function AddPartnerModal({ submitPartner }) {
   const [active, setActive] = useState(true);
   const [modulePerms, setModulePerms] = useState([]);
 
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  
 
   // const handleChange = (event) => {
   //   setMessage(event.target.value);
@@ -47,14 +55,15 @@ export default function AddPartnerModal({ submitPartner }) {
     handleClose();
   };
 
+  const handleDelete = () => { setShowDeleteModal(true) };
+
 
   return (
     <div onSubmit={submitPartner}>
-      <MyButton onClick={handleShow}>Ajouter un partenaire</MyButton>
-
+      <DeleteAlertModal showModal={showDeleteModal} item={1}/>
       <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-          <Modal.Title>Ajouter un partenaire</Modal.Title>
+          <Modal.Title>Partenaire {partner.id}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -65,6 +74,7 @@ export default function AddPartnerModal({ submitPartner }) {
                 placeholder="XYZ COMPANY"
                 autoFocus
                 required
+                value={partner.name}
                 onChange={(event) => setName(event.currentTarget.value)}
               />
             </Form.Group>
@@ -74,6 +84,7 @@ export default function AddPartnerModal({ submitPartner }) {
                 type="text"
                 placeholder="numero, voie, étage..."
                 required
+                value={partner.address}
                 onChange={(event) => setAddress(event.currentTarget.value)}
               />
             </Form.Group>
@@ -83,6 +94,7 @@ export default function AddPartnerModal({ submitPartner }) {
                 type="text"
                 placeholder="00000"
                 required
+                value={partner.postalCode}
                 onChange={(event) => setPostalCode(event.currentTarget.value)}
               />
             </Form.Group>
@@ -92,6 +104,7 @@ export default function AddPartnerModal({ submitPartner }) {
                 type="text"
                 placeholder="ville"
                 required
+                value={partner.city}
                 onChange={(event) => setCity(event.currentTarget.value)}
               />
             </Form.Group>
@@ -100,6 +113,7 @@ export default function AddPartnerModal({ submitPartner }) {
               <Form.Control
                 type="text"
                 default="France"
+                value={partner.country}
                 required
                 onChange={(event) => setCountry(event.currentTarget.value)}
               />
@@ -109,6 +123,7 @@ export default function AddPartnerModal({ submitPartner }) {
               <Form.Control
                 type="tel"
                 placeholder="+33XXXXXXXXX"
+                value={partner.phone}
                 required
                 onChange={(event) => setPhone(event.currentTarget.value)}
               />
@@ -116,6 +131,7 @@ export default function AddPartnerModal({ submitPartner }) {
             <Form.Group
               className="mb-3"
               controlId="partner.description"
+              value={partner.description}
             >
               <Form.Label>Descriptif et commentaires</Form.Label>
               <Form.Control as="textarea" rows={3} onChange={(event) => setDescription(event.currentTarget.value)}/>
@@ -133,6 +149,7 @@ export default function AddPartnerModal({ submitPartner }) {
               <Form.Control
                 type="text"
                 default="France"
+                value={partner.website}
                 onChange={(event) => setWebsite(event.currentTarget.value)}
               />
             </Form.Group>
@@ -140,7 +157,7 @@ export default function AddPartnerModal({ submitPartner }) {
             type="switch"
             id="partner.active"
             label="Partenaire actif"
-            defaultChecked={true}
+            defaultChecked={partner.active}
             controlId="partner.active"
             onChange={(event) => setActive(event.currentTarget.checked)}
             />
@@ -165,6 +182,9 @@ export default function AddPartnerModal({ submitPartner }) {
         </Form>
         </Modal.Body>
         <Modal.Footer>
+        <Button variant="danger" onClick={handleDelete}>
+            Supprimer
+          </Button>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
@@ -175,4 +195,6 @@ export default function AddPartnerModal({ submitPartner }) {
       </Modal>
     </div>
   );
-}
+})
+
+export default ModifyPartnerModal;

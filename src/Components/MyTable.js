@@ -1,7 +1,6 @@
 import Table from 'react-bootstrap/Table';
 
-
-function MyTable({parentData}) {
+function MyTable({parentData, setPartnerId}) {
 console.log({parentData})
   return (
     <Table striped bordered hover>
@@ -10,6 +9,7 @@ console.log({parentData})
           <th>Id</th>
           <th >Nom du partenaire</th>
           <th>Actif</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -18,6 +18,7 @@ console.log({parentData})
           <td>{partner.id}</td>
           <td>{partner.name}</td>
           <td>{partner.active ? 'oui' : 'non'}</td>
+          <td><i className="fa-solid fa-eye" id={partner.id} onClick={event => setPartnerId(event.currentTarget.id)}></i></td>
         </tr>
       )) : ''}
         

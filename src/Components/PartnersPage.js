@@ -5,6 +5,8 @@ import Header from './Header';
 import MyButton from './MyButton';
 import MyTable from './MyTable'
 import AddPartnerModal from './AddPartnerModal';
+import ModifyPartnerModal from './ModifyPartnerModal';
+import { useRef } from 'react';
 
 export default function PartnersPage() {
     const submitPartner = (name, address, postalCode, city, country, phone, description, logo, website, active, modulePerms) => {
@@ -34,24 +36,31 @@ export default function PartnersPage() {
       });
       };
 
-    const [data, setData] = useState('');
-    useEffect(() => {
+    //Modify Modal Childref Handleshow
+    const childRef = useRef(null);
 
+    const [data, setData] = useState('');
+    const [partnerToModify, setPartnerToModify] = useState({});
+
+    const setPartnerId = id => {
+        let partner = data.filter(partner => partner.id == id)
+        setPartnerToModify(partner[0]);
+        setTimeout(() => childRef.current.handleShow(),500);
+    }
+
+    useEffect(() => {
       http.get('/partners')
-  
         .then(response => setData(response.data["hydra:member"]))
-  
         .catch(error => console.log(error));
     }, []);
-    // http.get('/partners')
-    // .then(response => setData(response.data["hydra:member"]))
-    // .catch(error => console.log(error));
+
   return (
     <div>
         <div>{data ? data[0].name : 'chargement'}</div>
         <Header />
         <AddPartnerModal submitPartner={(name, address, postalCode, city, country, phone, description, logo, website, active, modulePerms) => submitPartner(name, address, postalCode, city, country, phone, description, logo, website, active, modulePerms)}/>
-        <MyTable parentData={data ? data : ''} />
+        <ModifyPartnerModal partner={partnerToModify} ref={childRef}/>
+        <MyTable parentData={data ? data : ''} setPartnerId={setPartnerId}/>
     </div>
   )
 };

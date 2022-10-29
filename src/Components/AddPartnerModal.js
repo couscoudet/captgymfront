@@ -6,6 +6,7 @@ import MyButton from './MyButton';
 import { CLIENT_MODULES } from '../helpers/CLIENT_MODULES';
 import http from '../helpers/http';
 
+
 export default function AddPartnerModal({ submitPartner }) {
   const [show, setShow] = useState(false);
   // const [message, setMessage] = useState('');
@@ -21,6 +22,7 @@ export default function AddPartnerModal({ submitPartner }) {
   const [website, setWebsite] = useState('');
   const [active, setActive] = useState(true);
   const [modulePerms, setModulePerms] = useState([]);
+  
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
