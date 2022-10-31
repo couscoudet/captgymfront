@@ -21,16 +21,6 @@ console.log({parentData})
           <td><i className="fa-solid fa-eye" id={partner.id} onClick={event => setPartnerId(event.currentTarget.id)}></i></td>
         </tr>
       )) : ''}
-        
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td colSpan={2}>Larry the Bird</td>
-        </tr>
       </tbody>
     </Table>
   );

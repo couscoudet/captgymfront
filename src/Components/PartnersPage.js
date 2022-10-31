@@ -56,7 +56,7 @@ export default function PartnersPage() {
 
   return (
     <div>
-        <div>{data ? data[0].name : 'chargement'}</div>
+        <div>{data ? '' : 'chargement...'}</div>
         <Header />
         <AddPartnerModal submitPartner={(name, address, postalCode, city, country, phone, description, logo, website, active, modulePerms) => submitPartner(name, address, postalCode, city, country, phone, description, logo, website, active, modulePerms)}/>
         <ModifyPartnerModal partner={partnerToModify} ref={childRef}/>

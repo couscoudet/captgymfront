@@ -10,18 +10,35 @@ import Contacts from './Components/Contacts.js';
 import PartnersPage from './Components/PartnersPage.js';
 
 function App() {
-  const [user, setUser] = React.useState(true);
+  const [user, setUser] = React.useState(window.localStorage.getItem('token'));
   
+  if (user) {console.log("app : user connecté")};
+
   return (
     <div className="App">
      <Routes>
-        <Route element={<PrivateRoute user={user} />} >
-        <Route path="/" element={<Home />} />
-        </Route>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/contacts" element={<Contacts />} />
-        <Route path="/partners" element={<PartnersPage />} />
-        </Routes>
+        <Route path="/" element={
+          <PrivateRoute user={user}>
+            <Home />
+          </PrivateRoute>
+            } />
+        <Route path="/contacts" element={
+          <PrivateRoute user={user}>
+            <Home />
+          </PrivateRoute>
+            } />
+        <Route path="/partners" element={
+          <PrivateRoute user={user}>
+            <PartnersPage />
+          </PrivateRoute>
+            } />
+        <Route path="/sport-rooms" element={
+          <PrivateRoute user={user}>
+            <Home />
+          </PrivateRoute>
+            } />
+        <Route path="/login" element={<LoginPage element={user} />} />
+      </Routes>
     </div>
   );
 }

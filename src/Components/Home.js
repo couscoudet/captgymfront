@@ -5,8 +5,8 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <h1>Home</h1>
-      <h2>{process.env.REACT_APP_API_URL}</h2>
+      <h1>Bienvenue</h1>
+      <h2>Vous êtes connecté</h2>
     </div>
   )
 }
