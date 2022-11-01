@@ -2,10 +2,12 @@ import React from 'react'
 import { Navbar, Container, Nav } from 'react-bootstrap'
 import logo from './../assets//logo.jpg'; 
 import Button from 'react-bootstrap/Button';
+import { Navigate } from 'react-router-dom';
 
 
 
 export default function Header() {
+
   return (
     <Navbar bg="primary" variant="dark" expand="sm" className="mb-3">
       <Container>
@@ -18,7 +20,7 @@ export default function Header() {
             <Nav.Link href="/contacts">Contacts</Nav.Link>
           </Nav>
         </Navbar.Collapse>
-        <Button variant="danger"><i class="fa-solid fa-right-from-bracket"></i></Button>
+        <Button variant="danger" href="/disconnect"><i className="fa-solid fa-right-from-bracket"></i></Button>
       </Container>
     </Navbar>
   )

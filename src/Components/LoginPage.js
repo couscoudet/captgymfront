@@ -1,35 +1,36 @@
 import Login from './Login';
 import { authenticationService } from '../services/authentication';
 import { Navigate } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import Home from './Home';
-import { useEffect } from 'react';
+import { useState } from 'react';
 
-const LoginPage = ({user}) => {
+const LoginPage = () => {
+    const [isLogged, setIsLogged] = useState(window.localStorage.getItem('token'))
     const loginUser = (email, password) => {
         const userCredentials = {
             email,
             password
         };
-
+        console.log("fonction loginUser lancée")
         authenticationService.login(userCredentials)
-        .then(loginData => window.localStorage.setItem('token', loginData.token));
+        .then(loginData => {
+            window.localStorage.setItem('token', loginData.token)
+            })
+        .then(()=> console.log("data récupéré"))
+        .then(() => {setIsLogged(window.localStorage.getItem('token'))})
     }
 
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (user) {
-            console.log("connecté")
-            navigate("/");
-        }
-    },[user])
-
-
+    
+     
     return (
-    <div className="App">
-    <Login loginUser={(email, password) => loginUser(email, password)}/>
-    </div>
-    );
+        <div className="App">
+        <Login loginUser={(email, password) => loginUser(email, password)}/>
+        {isLogged && (
+          <Navigate to="/" replace={true} />
+        )}
+        </div>
+    )
+
+
 }
 export default LoginPage;

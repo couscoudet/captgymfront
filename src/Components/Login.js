@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Home from './Home';
 import { Navigate } from 'react-router-dom';
 
-const Login = ({ loginUser, user }) => {
+const Login = ({ loginUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   

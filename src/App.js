@@ -8,6 +8,7 @@ import PrivateRoute from './routing/PrivateRoute.js';
 import { Button } from 'bootstrap';
 import Contacts from './Components/Contacts.js';
 import PartnersPage from './Components/PartnersPage.js';
+import DisconnectPage from './Components/DisconnectPage.js';
 
 function App() {
   const [user, setUser] = React.useState(window.localStorage.getItem('token'));
@@ -38,6 +39,7 @@ function App() {
           </PrivateRoute>
             } />
         <Route path="/login" element={<LoginPage element={user} />} />
+        <Route path="/disconnect" element={<DisconnectPage />} />
       </Routes>
     </div>
   );
