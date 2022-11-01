@@ -3,6 +3,9 @@ import { authenticationService } from '../services/authentication';
 import { Navigate } from 'react-router-dom';
 import Home from './Home';
 import { useState } from 'react';
+import { Card } from 'react-bootstrap';
+import logo from './../assets//logo.jpg'; 
+
 
 const LoginPage = () => {
     const [isLogged, setIsLogged] = useState(window.localStorage.getItem('token'))
@@ -23,11 +26,16 @@ const LoginPage = () => {
     
      
     return (
-        <div className="App">
+        <div className="App d-flex justify-content-center align-items-center" style={{height: '100vh'}}>
+        <Card>
+        <Card.Header><img src={logo} alt="captgym-logo" width={200}/></Card.Header>
+        <Card.Body>
         <Login loginUser={(email, password) => loginUser(email, password)}/>
         {isLogged && (
           <Navigate to="/" replace={true} />
         )}
+        </Card.Body>
+        </Card>
         </div>
     )
 
