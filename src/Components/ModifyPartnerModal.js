@@ -2,19 +2,12 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import MyButton from './MyButton';
 import { CLIENT_MODULES } from '../helpers/CLIENT_MODULES';
-import http from '../helpers/http';
 import { forwardRef, useImperativeHandle, useRef } from 'react';
-import DeleteAlertModal from './DeleteAlertModal';
 
 const ModifyPartnerModal = forwardRef(({ partner, submitPartner }, ref) => {
-  useImperativeHandle(ref, () => ({
-    handleShow() {setShow(true)} 
-    }));
-  
+
   const [show, setShow] = useState(false);
-  // const [message, setMessage] = useState('');
   
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
@@ -25,24 +18,38 @@ const ModifyPartnerModal = forwardRef(({ partner, submitPartner }, ref) => {
   const [description, setDescription] = useState('');
   const [logo, setLogo] = useState('');
   const [website, setWebsite] = useState('');
-  const [active, setActive] = useState(true);
-  const [modulePerms, setModulePerms] = useState([]);
+  const [active, setActive] = useState('');
+  const [defaultPerms, setDefaultPerms] = useState('');
+  const method = 'put';
+  const id = partner.id
 
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  useImperativeHandle(ref, () => ({
+    handleShow() {
+      setShow(true);
+      setName(partner.name);
+      setAddress(partner.address);
+      setPostalCode(partner.postalCode);
+      setCity(partner.city);
+      setCountry(partner.country);
+      setPhone(partner.phone);
+      setDescription(partner.description);
+      setLogo(partner.logo);
+      setWebsite(partner.website);
+      setActive(partner.active);
+      setDefaultPerms(partner.defaultPerms);
+    } 
+    }));
 
+ console.log(name)
   const handleClose = () => setShow(false);
   
 
-  // const handleChange = (event) => {
-  //   setMessage(event.target.value);
-  //   console.log(event.target.value);
-    
-  // }
 
+
+  //delete perms module function
   const deleteElementFromArray = (array,element) => {
     let id = array.indexOf(element);
     if (id !== undefined) {
-      console.log(array)
       return array.filter((item, index) => index !== array.indexOf(element))
       }
     else {
@@ -51,16 +58,13 @@ const ModifyPartnerModal = forwardRef(({ partner, submitPartner }, ref) => {
   }
 
   const handleSubmit = () => {
-    submitPartner(name, address, postalCode, city, country, phone, description, logo, website, active, modulePerms);
+    submitPartner(name, address, postalCode, city, country, phone, description, logo, website, active, defaultPerms, method, id);
     handleClose();
   };
 
-  const handleDelete = () => { setShowDeleteModal(true) };
-
-
+  
   return (
     <div onSubmit={submitPartner}>
-      <DeleteAlertModal showModal={showDeleteModal} item={1}/>
       <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
           <Modal.Title>Partenaire {partner.id}</Modal.Title>
@@ -74,7 +78,7 @@ const ModifyPartnerModal = forwardRef(({ partner, submitPartner }, ref) => {
                 placeholder="XYZ COMPANY"
                 autoFocus
                 required
-                value={partner.name}
+                defaultValue={name}
                 onChange={(event) => setName(event.currentTarget.value)}
               />
             </Form.Group>
@@ -84,7 +88,7 @@ const ModifyPartnerModal = forwardRef(({ partner, submitPartner }, ref) => {
                 type="text"
                 placeholder="numero, voie, étage..."
                 required
-                value={partner.address}
+                value={address}
                 onChange={(event) => setAddress(event.currentTarget.value)}
               />
             </Form.Group>
@@ -94,7 +98,7 @@ const ModifyPartnerModal = forwardRef(({ partner, submitPartner }, ref) => {
                 type="text"
                 placeholder="00000"
                 required
-                value={partner.postalCode}
+                value={postalCode}
                 onChange={(event) => setPostalCode(event.currentTarget.value)}
               />
             </Form.Group>
@@ -104,7 +108,7 @@ const ModifyPartnerModal = forwardRef(({ partner, submitPartner }, ref) => {
                 type="text"
                 placeholder="ville"
                 required
-                value={partner.city}
+                value={city}
                 onChange={(event) => setCity(event.currentTarget.value)}
               />
             </Form.Group>
@@ -113,7 +117,7 @@ const ModifyPartnerModal = forwardRef(({ partner, submitPartner }, ref) => {
               <Form.Control
                 type="text"
                 default="France"
-                value={partner.country}
+                value={country}
                 required
                 onChange={(event) => setCountry(event.currentTarget.value)}
               />
@@ -123,7 +127,7 @@ const ModifyPartnerModal = forwardRef(({ partner, submitPartner }, ref) => {
               <Form.Control
                 type="tel"
                 placeholder="+33XXXXXXXXX"
-                value={partner.phone}
+                value={phone}
                 required
                 onChange={(event) => setPhone(event.currentTarget.value)}
               />
@@ -131,10 +135,9 @@ const ModifyPartnerModal = forwardRef(({ partner, submitPartner }, ref) => {
             <Form.Group
               className="mb-3"
               controlId="partner.description"
-              value={partner.description}
             >
               <Form.Label>Descriptif et commentaires</Form.Label>
-              <Form.Control as="textarea" rows={3} onChange={(event) => setDescription(event.currentTarget.value)}/>
+              <Form.Control as="textarea" value={description} rows={3} onChange={(event) => setDescription(event.currentTarget.value)}/>
             </Form.Group>
             <Form.Group className="mb-3" controlId="partner.logo">
               <Form.Label>Téléverser le logo du partenaire</Form.Label>
@@ -149,7 +152,7 @@ const ModifyPartnerModal = forwardRef(({ partner, submitPartner }, ref) => {
               <Form.Control
                 type="text"
                 default="France"
-                value={partner.website}
+                value={website}
                 onChange={(event) => setWebsite(event.currentTarget.value)}
               />
             </Form.Group>
@@ -157,7 +160,7 @@ const ModifyPartnerModal = forwardRef(({ partner, submitPartner }, ref) => {
             type="switch"
             id="partner.active"
             label="Partenaire actif"
-            defaultChecked={partner.active}
+            defaultChecked={active}
             controlId="partner.active"
             onChange={(event) => setActive(event.currentTarget.checked)}
             />
@@ -166,14 +169,15 @@ const ModifyPartnerModal = forwardRef(({ partner, submitPartner }, ref) => {
                 CLIENT_MODULES.map(clientModule => (
                     <Form.Check 
                     type="checkbox"
-                    id={`partner.${clientModule}`}
+                    id={`${id}.${clientModule}`}
                     value={clientModule}
+                    defaultChecked={partner}
                     key={clientModule}
                     label={clientModule}
                     onChange={(event) => {
-                        console.log(modulePerms);
-                      setModulePerms(event.currentTarget.checked ? [...modulePerms, event.currentTarget.value] : deleteElementFromArray(modulePerms, event.currentTarget.value));
-                        console.log(modulePerms);
+
+                      setDefaultPerms(event.currentTarget.checked ? [...defaultPerms, event.currentTarget.value] : deleteElementFromArray(defaultPerms, event.currentTarget.value));
+
                       }
                       }
                     />
@@ -182,14 +186,11 @@ const ModifyPartnerModal = forwardRef(({ partner, submitPartner }, ref) => {
         </Form>
         </Modal.Body>
         <Modal.Footer>
-        <Button variant="danger" onClick={handleDelete}>
-            Supprimer
-          </Button>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Abandonner
           </Button>
-          <Button variant="primary" onClick={handleSubmit}>
-            Save Changes
+          <Button variant="danger" onClick={handleSubmit}>
+            Enregistrer les modifications
           </Button>
         </Modal.Footer>
       </Modal>

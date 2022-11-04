@@ -10,7 +10,7 @@ import http from '../helpers/http';
 export default function AddPartnerModal({ submitPartner }) {
   const [show, setShow] = useState(false);
   // const [message, setMessage] = useState('');
-
+  console.log("ajouter modale : je suis là")
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [postalCode, setPostalCode] = useState('');
@@ -21,8 +21,9 @@ export default function AddPartnerModal({ submitPartner }) {
   const [logo, setLogo] = useState('');
   const [website, setWebsite] = useState('');
   const [active, setActive] = useState(true);
-  const [modulePerms, setModulePerms] = useState([]);
-  
+  const [defaultPerms, setdefaultPerms] = useState([]);
+  const method = 'post';
+  const id = null;
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -45,7 +46,7 @@ export default function AddPartnerModal({ submitPartner }) {
   }
 
   const handleSubmit = () => {
-    submitPartner(name, address, postalCode, city, country, phone, description, logo, website, active, modulePerms);
+    submitPartner(name, address, postalCode, city, country, phone, description, logo, website, active, defaultPerms, method, id );
     handleClose();
   };
 
@@ -156,9 +157,9 @@ export default function AddPartnerModal({ submitPartner }) {
                     key={clientModule}
                     label={clientModule}
                     onChange={(event) => {
-                        console.log(modulePerms);
-                      setModulePerms(event.currentTarget.checked ? [...modulePerms, event.currentTarget.value] : deleteElementFromArray(modulePerms, event.currentTarget.value));
-                        console.log(modulePerms);
+                        console.log(defaultPerms);
+                      setdefaultPerms(event.currentTarget.checked ? [...defaultPerms, event.currentTarget.value] : deleteElementFromArray(defaultPerms, event.currentTarget.value));
+                        console.log(defaultPerms);
                       }
                       }
                     />
@@ -168,10 +169,10 @@ export default function AddPartnerModal({ submitPartner }) {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Fermer
           </Button>
           <Button variant="primary" onClick={handleSubmit}>
-            Save Changes
+            Enregistrer
           </Button>
         </Modal.Footer>
       </Modal>

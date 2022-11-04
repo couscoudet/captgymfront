@@ -21,6 +21,7 @@ const LoginPage = () => {
             })
         .then(()=> console.log("data récupéré"))
         .then(() => {setIsLogged(window.localStorage.getItem('token'))})
+        .catch((error) => {setIsLogged(null); alert("probleme de connexion - " + error)})
     }
 
     
