@@ -88,10 +88,10 @@ export default function PartnersPage() {
         partner={partnerToModify} ref={childRef}/> }
         <Form onSubmit={dontRefresh} className="d-flex align-items-center justify-content-end mb-1">
         <Form.Group className="me-4 d-flex align-items-center" controlId="partner.city">
-              <Form.Label className="mb-0 me-1" >Rechercher</Form.Label>
+              <Form.Label className="mb-0 me-1" ><i class="fa-solid fa-magnifying-glass"></i></Form.Label>
               <Form.Control
                 type="text"
-                style={{width: 200}}
+                style={{width: 180}}
                 placeholder="nom du partenaire"
                 required
                 onChange={(event) => setSearch(event.currentTarget.value)}
@@ -100,7 +100,7 @@ export default function PartnersPage() {
           <Form.Check
               type="switch"
               id="search-active"
-              label="partenaire actifs"
+              label="Actifs"
               className="d-flex justify-content-end me-2"
               defaultChecked={true}
               onChange={(event) => setActivePartners(event.currentTarget.checked)}
