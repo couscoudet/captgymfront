@@ -15,10 +15,10 @@ console.log({parentData})
       <tbody>
       {parentData ? parentData.map(partner => (
         <tr key={partner.id}>
-          {partner.id ? <td>{partner.id}</td> : null}
-          {partner.name ? <td>{partner.name}</td> : null }
+          <td>{partner.id}</td>
+          <td>{partner.name}</td>
           {partner.active ? <td style={{color: 'green'}}>oui</td> : <td style={{color: 'red'}}>non</td>}
-          {partner.id ? <td><i className="fa-solid fa-eye" id={partner.id} onClick={event => setPartnerId(event.currentTarget.id)}></i></td> : null}
+          <td><i className="fa-solid fa-eye" id={partner.id} onClick={event => setPartnerId(event.currentTarget.id)}></i></td>
         </tr>
       )) : null}
       </tbody>

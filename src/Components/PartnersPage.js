@@ -8,20 +8,22 @@ import ModifyPartnerModal from './ModifyPartnerModal';
 import { useRef } from 'react';
 import { Form } from 'react-bootstrap';
 import Spinner from 'react-bootstrap/Spinner';
+import { Navigate } from 'react-router-dom';
 
 export default function PartnersPage() {
 
     const loadData = () => {
       setLoaded(false)
-      http.get(`/partners?active=${activePartners}`)
+      http.get(`/partners?active=${activePartners}${search && '&name='+search}`)
         .then(response => setData(response.data["hydra:member"]))
         .then(()=>setLoaded(true))
-        .catch(error => console.log(error));
+        .catch(error => { console.log(error); setError(true) });
       }
     
+    const [error, setError] = useState(false)
     const [loaded, setLoaded] = useState(false)
-
-    const submitPartner = (name, address, postalCode, city, country, phone, description, logo, website, active, defaultPerms, method, id) => {
+    console.log(error);
+    const submitPartner = (name, address, postalCode, city, country, phone, description, logo, websiteUrl, active, defaultPerms, method, id) => {
       let partnerData = {
         name: name,
         address: address,
@@ -31,12 +33,13 @@ export default function PartnersPage() {
         phone: phone, 
         description: description,
         logo: logo,
-        website: website,
+        websiteUrl: websiteUrl,
         active: active,
         defaultPerms: defaultPerms
       };
         if (method === 'post') {
           setLoaded(false)
+          console.log(partnerData)
           http.post('/partners',JSON.stringify(partnerData))
           .then(function (response) {
                 loadData();
@@ -44,6 +47,7 @@ export default function PartnersPage() {
         }
         if (method === 'put') {
           setLoaded(false)
+          console.log(partnerData)
           http.put(`/partners/${id}`,JSON.stringify(partnerData))
           .then(function (response) {
                 loadData();
@@ -59,6 +63,7 @@ export default function PartnersPage() {
 
     const [data, setData] = useState('');
     const [partnerToModify, setPartnerToModify] = useState({});
+    const [search, setSearch] = useState('')
 
     const setPartnerId = id => {
         let partner = data.filter(partner => partner.id == id)
@@ -66,25 +71,37 @@ export default function PartnersPage() {
         setTimeout(() => childRef.current.handleShow(),500);
     }
 
+    const dontRefresh = e => e.preventDefault();
  
     useEffect(() => 
       loadData(), 
-      [activePartners]);
+      [activePartners, search]);
 
   return (
     <div>
         <div>{data ? '' : 'chargement...'}</div>
+        {error && <Navigate to="/disconnect" replace={true} />}
         <Header />
-        <AddPartnerModal submitPartner={(name, address, postalCode, city, country, phone, description, logo, website, active, defaultPerms, method, id) => submitPartner(name, address, postalCode, city, country, phone, description, logo, website, active, defaultPerms, method, id)}/>
+        <AddPartnerModal submitPartner={(name, address, postalCode, city, country, phone, description, logo, websiteUrl, active, defaultPerms, method, id) => submitPartner(name, address, postalCode, city, country, phone, description, logo, websiteUrl, active, defaultPerms, method, id)}/>
         {partnerToModify && <ModifyPartnerModal 
-        submitPartner={(name, address, postalCode, city, country, phone, description, logo, website, active, defaultPerms, method, id) => submitPartner(name, address, postalCode, city, country, phone, description, logo, website, active, defaultPerms, method, id)}
+        submitPartner={(name, address, postalCode, city, country, phone, description, logo, websiteUrl, active, defaultPerms, method, id) => submitPartner(name, address, postalCode, city, country, phone, description, logo, websiteUrl, active, defaultPerms, method, id)}
         partner={partnerToModify} ref={childRef}/> }
-        <Form>
+        <Form onSubmit={dontRefresh} className="d-flex align-items-center justify-content-end mb-1">
+        <Form.Group className="me-4 d-flex align-items-center" controlId="partner.city">
+              <Form.Label className="mb-0 me-1" >Rechercher</Form.Label>
+              <Form.Control
+                type="text"
+                style={{width: 200}}
+                placeholder="nom du partenaire"
+                required
+                onChange={(event) => setSearch(event.currentTarget.value)}
+              />
+            </Form.Group>
           <Form.Check
               type="switch"
               id="search-active"
               label="partenaire actifs"
-              className="d-flex justify-content-end m-1"
+              className="d-flex justify-content-end me-2"
               defaultChecked={true}
               onChange={(event) => setActivePartners(event.currentTarget.checked)}
               />

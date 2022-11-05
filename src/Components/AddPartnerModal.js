@@ -19,7 +19,7 @@ export default function AddPartnerModal({ submitPartner }) {
   const [phone, setPhone] = useState('');
   const [description, setDescription] = useState('');
   const [logo, setLogo] = useState('');
-  const [website, setWebsite] = useState('');
+  const [websiteUrl, setWebsiteUrl] = useState('');
   const [active, setActive] = useState(true);
   const [defaultPerms, setdefaultPerms] = useState([]);
   const method = 'post';
@@ -46,7 +46,7 @@ export default function AddPartnerModal({ submitPartner }) {
   }
 
   const handleSubmit = () => {
-    submitPartner(name, address, postalCode, city, country, phone, description, logo, website, active, defaultPerms, method, id );
+    submitPartner(name, address, postalCode, city, country, phone, description, logo, websiteUrl, active, defaultPerms, method, id );
     handleClose();
   };
 
@@ -131,12 +131,12 @@ export default function AddPartnerModal({ submitPartner }) {
                 // onChange={(event) => setLogo('')}
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="partner.website">
+            <Form.Group className="mb-3" controlId="partner.website_url">
               <Form.Label>Site internet</Form.Label>
               <Form.Control
                 type="text"
                 default="France"
-                onChange={(event) => setWebsite(event.currentTarget.value)}
+                onChange={(event) => setWebsiteUrl(event.currentTarget.value)}
               />
             </Form.Group>
             <Form.Check 

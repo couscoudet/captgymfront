@@ -17,7 +17,7 @@ const ModifyPartnerModal = forwardRef(({ partner, submitPartner }, ref) => {
   const [phone, setPhone] = useState('');
   const [description, setDescription] = useState('');
   const [logo, setLogo] = useState('');
-  const [website, setWebsite] = useState('');
+  const [websiteUrl, setWebsiteUrl] = useState('');
   const [active, setActive] = useState('');
   const [defaultPerms, setDefaultPerms] = useState('');
   const method = 'put';
@@ -34,7 +34,7 @@ const ModifyPartnerModal = forwardRef(({ partner, submitPartner }, ref) => {
       setPhone(partner.phone);
       setDescription(partner.description);
       setLogo(partner.logo);
-      setWebsite(partner.website);
+      setWebsiteUrl(partner.website_url);
       setActive(partner.active);
       setDefaultPerms(partner.defaultPerms);
     } 
@@ -58,7 +58,7 @@ const ModifyPartnerModal = forwardRef(({ partner, submitPartner }, ref) => {
   }
 
   const handleSubmit = () => {
-    submitPartner(name, address, postalCode, city, country, phone, description, logo, website, active, defaultPerms, method, id);
+    submitPartner(name, address, postalCode, city, country, phone, description, logo, websiteUrl, active, defaultPerms, method, id);
     handleClose();
   };
 
@@ -116,7 +116,6 @@ const ModifyPartnerModal = forwardRef(({ partner, submitPartner }, ref) => {
               <Form.Label>Pays</Form.Label>
               <Form.Control
                 type="text"
-                default="France"
                 value={country}
                 required
                 onChange={(event) => setCountry(event.currentTarget.value)}
@@ -152,8 +151,8 @@ const ModifyPartnerModal = forwardRef(({ partner, submitPartner }, ref) => {
               <Form.Control
                 type="text"
                 default="France"
-                value={website}
-                onChange={(event) => setWebsite(event.currentTarget.value)}
+                value={websiteUrl}
+                onChange={(event) => setWebsiteUrl(event.currentTarget.value)}
               />
             </Form.Group>
             <Form.Check 
@@ -171,7 +170,7 @@ const ModifyPartnerModal = forwardRef(({ partner, submitPartner }, ref) => {
                     type="checkbox"
                     id={`${id}.${clientModule}`}
                     value={clientModule}
-                    defaultChecked={partner}
+                    defaultChecked={defaultPerms.includes(clientModule)}
                     key={clientModule}
                     label={clientModule}
                     onChange={(event) => {
