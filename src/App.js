@@ -11,8 +11,24 @@ import PartnersPage from './Components/PartnersPage.js';
 import DisconnectPage from './Components/DisconnectPage.js';
 
 function App() {
-  const [user, setUser] = React.useState(window.localStorage.getItem('token'));
-  
+  const [user, setUser] = React.useState(Date.now()/1000 < parseJwt(window.localStorage.getItem('token')).exp);
+
+  function parseJwt (token) {
+    if (token) {    
+      var base64Url = token.split('.')[1];
+      var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+
+      return JSON.parse(jsonPayload);
+    }
+    else {
+      return 0
+    }
+
+  }
+
   if (user) {console.log("app : user connecté")};
 
   return (

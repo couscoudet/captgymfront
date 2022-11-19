@@ -14,14 +14,21 @@ export default function PartnersPage() {
 
     const loadData = () => {
       setLoaded(false)
-      http.get(`/partners?active=${activePartners}${search && '&name='+search}`)
-        .then(response => setData(response.data["hydra:member"]))
+      http.get(`${page}&active=${activePartners}${search && '&name='+search}`)
+        .then(response => {
+          setData(response.data["hydra:member"]);
+          setPreviousPageLink(response.data["hydra:view"]["hydra:previous"]);
+          console.log(response);
+          setNextPageLink(response.data["hydra:view"]["hydra:next"])
+          console.log(nextPageLink);
+        })
         .then(()=>setLoaded(true))
         .catch(error => { console.log(error); setError(true) });
       }
     
     const [error, setError] = useState(false)
     const [loaded, setLoaded] = useState(false)
+      
     console.log(error);
     const submitPartner = (name, address, postalCode, city, country, phone, description, logo, websiteUrl, active, defaultPerms, method, id) => {
       let partnerData = {
@@ -64,6 +71,14 @@ export default function PartnersPage() {
     const [data, setData] = useState('');
     const [partnerToModify, setPartnerToModify] = useState({});
     const [search, setSearch] = useState('')
+    const [previousPageLink, setPreviousPageLink] = useState('');
+    const [nextPageLink, setNextPageLink] = useState('');
+    const [page, setPage] = useState('/partners?page=1')
+    const toPage = (link) => {
+      setPage(link);
+      loadData();
+    }
+   
 
     const setPartnerId = id => {
         let partner = data.filter(partner => partner.id == id)
@@ -80,7 +95,7 @@ export default function PartnersPage() {
   return (
     <div>
         <div>{data ? '' : 'chargement...'}</div>
-        {error && <Navigate to="/disconnect" replace={true} />}
+        {/* {error && <Navigate to="/disconnect" replace={true} />} */}
         <Header />
         <AddPartnerModal submitPartner={(name, address, postalCode, city, country, phone, description, logo, websiteUrl, active, defaultPerms, method, id) => submitPartner(name, address, postalCode, city, country, phone, description, logo, websiteUrl, active, defaultPerms, method, id)}/>
         {partnerToModify && <ModifyPartnerModal 
@@ -106,7 +121,7 @@ export default function PartnersPage() {
               onChange={(event) => setActivePartners(event.currentTarget.checked)}
               />
         </Form>
-        {loaded ? <MyTable parentData={data ? data : ''} setPartnerId={setPartnerId}/> : <Spinner animation="grow" variant="primary" />}
+        {loaded ? <MyTable parentData={data ? data : ''} setPartnerId={setPartnerId} previousPageLink={previousPageLink} nextPageLink={nextPageLink} toPage={(page) => toPage(page)}/>  : <Spinner animation="grow" variant="primary" />}
     </div>
   )
 };

@@ -47,6 +47,11 @@ h5{
     justify-content: center;
 }
 
+.arrow {
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
 /* import bootstrap to set changes */
 @import "~bootstrap/scss/bootstrap";
 
