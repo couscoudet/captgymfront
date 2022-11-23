@@ -35,8 +35,8 @@ const toNextPage = () => {
         </tbody>
       </Table>
       <div className="d-flex justify-content-end me-3">
-          {previousPageLink && <div className="p-2 m-1 arrow" onClick={toPreviousPage}><i class="fa-solid fa-arrow-left"></i></div>}
-          {nextPageLink && <div className="p-2 m-1 arrow" onClick={toNextPage}><i class="fa-solid fa-arrow-right"></i></div>}
+          {previousPageLink && <div className="p-2 m-1 arrow" onClick={toPreviousPage}><i className="fa-solid fa-arrow-left"></i></div>}
+          {nextPageLink && <div className="p-2 m-1 arrow" onClick={toNextPage}><i className="fa-solid fa-arrow-right"></i></div>}
       </div>
     </div>
   );

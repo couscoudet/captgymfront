@@ -103,7 +103,7 @@ export default function PartnersPage() {
         partner={partnerToModify} ref={childRef}/> }
         <Form onSubmit={dontRefresh} className="d-flex align-items-center justify-content-end mb-1">
         <Form.Group className="me-4 d-flex align-items-center" controlId="partner.city">
-              <Form.Label className="mb-0 me-1" ><i class="fa-solid fa-magnifying-glass"></i></Form.Label>
+              <Form.Label className="mb-0 me-1" ><i className="fa-solid fa-magnifying-glass"></i></Form.Label>
               <Form.Control
                 type="text"
                 style={{width: 180}}

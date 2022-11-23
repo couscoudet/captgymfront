@@ -11,9 +11,9 @@ import PartnersPage from './Components/PartnersPage.js';
 import DisconnectPage from './Components/DisconnectPage.js';
 
 function App() {
-  const [user, setUser] = React.useState(Date.now()/1000 < parseJwt(window.localStorage.getItem('token')).exp);
+  const [user, setUser] = React.useState(isTokenValid(window.localStorage.getItem('token')));
 
-  function parseJwt (token) {
+  function parseJwt(token) {
     if (token) {    
       var base64Url = token.split('.')[1];
       var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -27,6 +27,10 @@ function App() {
       return 0
     }
 
+  }
+
+  function isTokenValid(token) {
+    return Date.now()/1000 < parseJwt(token).exp
   }
 
   if (user) {console.log("app : user connecté")};
@@ -54,8 +58,8 @@ function App() {
             <Home />
           </PrivateRoute>
             } />
-        <Route path="/login" element={<LoginPage element={user} />} />
-        <Route path="/disconnect" element={<DisconnectPage />} />
+        <Route path="/login" element={<LoginPage user={user} userSwitch={setUser}/>} />
+        <Route path="/disconnect" element={<DisconnectPage userSwitch={setUser}/>} />
       </Routes>
     </div>
   );

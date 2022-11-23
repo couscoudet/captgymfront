@@ -7,8 +7,9 @@ import { Card } from 'react-bootstrap';
 import logo from './../assets//logo.jpg'; 
 
 
-const LoginPage = () => {
-    const [isLogged, setIsLogged] = useState(window.localStorage.getItem('token'))
+const LoginPage = ({user, userSwitch}) => {
+    
+    console.log('login...')
     const loginUser = (email, password) => {
         const userCredentials = {
             email,
@@ -20,8 +21,8 @@ const LoginPage = () => {
             window.localStorage.setItem('token', loginData.token)
             })
         .then(()=> console.log("data récupéré"))
-        .then(() => {setIsLogged(window.localStorage.getItem('token'))})
-        .catch((error) => {setIsLogged(null); alert("probleme de connexion - " + error)})
+        .then(() => {userSwitch(true)})
+        .catch((error) => {userSwitch(null); alert("probleme de connexion - " + error)})
     }
 
     
@@ -32,7 +33,7 @@ const LoginPage = () => {
         <Card.Header><img src={logo} alt="captgym-logo" width={200}/></Card.Header>
         <Card.Body>
         <Login loginUser={(email, password) => loginUser(email, password)}/>
-        {isLogged && (
+        {user && (
           <Navigate to="/" replace={true} />
         )}
         </Card.Body>
