@@ -1,7 +1,11 @@
 # Application de gestion de l'API d'une salle de sport
+
 Ce projet n'est pas finalisé, pas de sécurisation des entrées, pas de rôle
+
 Login : test@test.fr
+
 Password : test
+
 Back end réalisé avec Symfony et API Platform
 
 # Getting Started with Create React App
