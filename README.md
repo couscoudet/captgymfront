@@ -1,4 +1,4 @@
-# Application de gestion de l'API d'une salle de sport
+# Frontend - Application de gestion de l'API d'une salle de sport
 
 Projet non finalisé, pas de sécurisation des entrées, pas de rôle.
 L'application basée sur React permet de faire des appels à l'API créée en backend.
@@ -8,6 +8,14 @@ Fonctionnalités au niveau de la page "partenaires" :
 - rechercher un partenaire
 - modifier un partenaire
 
+
+Login : test@test.fr
+
+Password : test
+
+Back end réalisé avec Symfony et API Platform
+
+
 https://precious-florentine-19494a.netlify.app
 
 **Un certain temps peut être nécessaire pour la première connexion en raison du démarrage du serveur Heroku.**
@@ -15,11 +23,6 @@ https://precious-florentine-19494a.netlify.app
 ![image](https://user-images.githubusercontent.com/48496147/230603086-e88f40d2-febc-4682-9726-5a724184f61c.png)
 
 
-Login : test@test.fr
-
-Password : test
-
-Back end réalisé avec Symfony et API Platform
 
 
 
