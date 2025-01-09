@@ -18,7 +18,11 @@ Back end réalisé avec Symfony et API Platform
 
 https://precious-florentine-19494a.netlify.app
 
-**Un certain temps peut être nécessaire pour la première connexion en raison du démarrage du serveur Heroku.**
+🚨⚠️ Alerte Importante ⚠️🚨
+Il n'est plus possible de se connecter à l'application, car le serveur backend a été supprimé. 🛠️❌
+Nous vous remercions de votre compréhension et vous prions de nous excuser pour la gêne occasionnée. 🙏💔
+
+N'hésitez pas à nous contacter pour toute question ou information complémentaire. 📩✨
 
 ![image](https://user-images.githubusercontent.com/48496147/230603086-e88f40d2-febc-4682-9726-5a724184f61c.png)
 
